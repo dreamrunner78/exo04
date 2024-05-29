@@ -1,0 +1,63 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: upgrade-postgresql-job
+spec:
+  template:
+    metadata:
+      labels:
+{{COMMONLABELSHEIGHT}}
+    spec:
+      imagePullSecrets:
+        - name: {{IMAGEPULLSECRET}}
+      initContainers:
+        - name: dbready
+          image: "{{REGISTRY}}/{{PGS_REPLICATION_REPOSITORY}}:{{PGS_REPLICATION_VERSION}}"
+          imagePullPolicy: "{{PULLPOLICY}}"          
+          securityContext:
+            runAsUser: {{RUNASUSER}}
+            runAsNonRoot: true
+            privileged: false
+            readOnlyRootFilesystem: {{READONLYROOTFILESYSTEM}}
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            seccompProfile:
+              type: "RuntimeDefault"
+          command:
+          - /bin/bash
+          - -c
+          - |
+            until pg_isready -h {{PGS_SERVICENAME}}.{{NAMESPACE}}.{{CLUSTERDOMAIN}} -p 5432 -U {{PGS_USERNAME}} -d {{PGS_DATABASE}}
+            do
+              echo "Database is not ready yet. Retrying in 2 seconds..."
+              sleep 2
+            done
+      containers:
+        - name: postgresql-container
+          image: "{{REGISTRY}}/{{PGS_REPLICATION_REPOSITORY}}:{{PGS_REPLICATION_VERSION}}"
+          securityContext:
+            runAsUser: {{RUNASUSER}}
+            runAsNonRoot: true
+            privileged: false
+            readOnlyRootFilesystem: {{READONLYROOTFILESYSTEM}}
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            seccompProfile:
+              type: "RuntimeDefault"
+          command: ["/bin/sh", "-c"]
+          args:
+          - psql -h {{PGS_SERVICENAME}}.{{NAMESPACE}}.{{CLUSTERDOMAIN}} -U {{PGS_USERNAME}} -d {{PGS_DATABASE}} -a -f /sql/upgrade.sql
+          env:
+          - name: PGPASSWORD
+            value: {{PGS_PASSWORD}}
+          volumeMounts:
+          - name: data-volume
+            mountPath: /sql
+      volumes:
+        - name: data-volume
+          configMap:
+            name: upgrade-cm
+      restartPolicy: Never
+  backoffLimit: 4

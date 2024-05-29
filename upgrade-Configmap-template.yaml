@@ -1,0 +1,294 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: upgrade-cm
+data:
+  upgrade.sql: |
+
+    alter table dcp_queues add column randomstring text NOT null;
+
+    alter table dcp_spark_applications_obj add column yqueue varchar default '';
+
+    ALTER TABLE dcp_queues ALTER COLUMN "name" SET DEFAULT NOT null;
+
+    alter table dcp_admin_users add column publicuser boolean default false;
+    alter table dcp_admin_users add column technical boolean default false;
+    alter table dcp_admin_users add column description varchar default '';    
+    ALTER TABLE dcp_admin_users ADD COLUMN tokenvalidity bigint DEFAULT 1;
+    ALTER TABLE dcp_admin_users ADD COLUMN unittokenvalidity varchar DEFAULT 'year';
+    alter table dcp_admin_users add column strissuedat varchar DEFAULT '';
+    alter table dcp_admin_users add column strexpirationdate varchar DEFAULT '';
+    alter table dcp_admin_users add column token text default '';
+
+    alter table dcp_query_sql add column execparallel boolean default false;
+
+    alter table dcp_pipeline_instance add column idairflow bigint default 0;
+    alter table dcp_pipeline_instance add column airflow varchar default '';
+
+    create table if not exists dcp_keytabs (
+        id BIGSERIAL PRIMARY key,
+        enabled boolean default true,
+        publickeytab boolean default true,
+        idprovider bigint NOT NULL,
+        name varchar not null,
+        description varchar,
+        realm varchar not null,
+        principal varchar not null,
+        serviceprincipal varchar default '',
+        filepath text not null,
+        keytabcontent text not null,
+        date_created timestamp default CURRENT_TIMESTAMP,
+        date_updated timestamp default CURRENT_TIMESTAMP
+    );
+
+    create table if not exists dcp_queues_history (
+        id BIGSERIAL PRIMARY key,
+        idprovider bigint default 0,
+        provider varchar,
+        name varchar NOT null,
+        description varchar,
+        content text default '',
+        date_created timestamp default CURRENT_TIMESTAMP,
+        date_updated timestamp default CURRENT_TIMESTAMP
+    );
+
+
+    delete from dcp_services;
+
+    insert into dcp_services(servicename, servicekey, enabled) values('dcp-tenant', 'tenant', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('keycloak-service', 'keycloak', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('dcp-bucket', 'bucket', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('dcp-pipeline-editor', 'pipeline', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('dcp-orchestrator', 'airflow', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('spark-history', 'sphs', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('spark-monitoring', 'spmn', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('spark-apps', 'sparkjob', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('dcp-single-notebook', 'singlenotebook', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('spark-artifact', 'sparkartifact', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('sql-service', 'sql', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('dcp-policy-service', 'sqlpolicy', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('metastore-service', 'sqlhms', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('catalog-service', 'sqlcatalog', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('cache-service', 'cache', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('sql-web', 'sqlweb', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('superset-service', 'superset', true);
+
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('keytab',true,'CREATE_KEYTAB');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('keytab',true,'DELETE_KEYTAB');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('technicaluser',true,'CREATE_TECHNICAL_USER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('technicaluser',true,'DELETE_TECHNICAL_USER');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('cache',true,'CREATE_CACHE_MOUNT');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('cache',true,'DELETE_CACHE_MOUNT');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('cache',true,'PERMISSION_CACHE_MOUNT');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('ranger',true,'DELETE_SQLPOLICY_RULES');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sqlqueryweb',true,'CREATE_SQLQUERYWEB');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sqlqueryweb',true,'RUN_SQLQUERYWEB');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sqlqueryweb',true,'DELETE_SQLQUERYWEB');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sqlqueryweb',true,'VIEWCONF_SQLQUERYWEB');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sqlqueryweb',true,'IMPORT_SQLQUERYWEB');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('dag',true,'DELETE_DAG_RUN');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('dag',true,'VIEWLOG_DAG');
+
+
+    delete from dcp_images;
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('java21', 'java', 'Java 21', true, true, '{{REGISTRY}}','{{REPOSITORY}}/java','21-jre-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('java17', 'java', 'Java 17', true, true, '{{REGISTRY}}','{{REPOSITORY}}/java','17-jre-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('java11', 'java', 'Java 11', true, true, '{{REGISTRY}}','{{REPOSITORY}}/java','11-jre-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('postgresql', 'postgres', 'image to install postgresql database', true, true, '{{REGISTRY}}','{{REPOSITORY}}/pgs','replication-16.1.0-debian-11-r15-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('proxy', 'proxy', 'DCP proxy', true, true, '{{REGISTRY}}','{{REPOSITORY}}/proxy','1.0.0-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('cache', 'cache', 'cache service', true, true, '{{REGISTRY}}','{{REPOSITORY}}/cache','2.10.0-SNAPSHOT-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('sp-350-j17p3h3', 'spark', 'Spark 3.5.0 java 17 Python3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/spark','350-j17p3h3-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('sp-342-j17p3h3', 'spark', 'Spark 3.4.2 java 17 Python3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/spark','342-j17p3h3-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('sp-334-j11p3h3', 'spark', 'Spark 3.3.4 java 11 Python3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/spark','334-j11p3h3-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('sp-334-j17p3h3', 'spark', 'Spark 3.3.4 java 17 Python3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/spark','334-j17p3h3-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('sparkoperator-3.1.1', 'sparkoperator', 'Spark Operator 3.1.1', true, true, '{{REGISTRY}}','{{REPOSITORY}}/spark','operator-v1beta2-1.3.8-3.1.1-1.0.0','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('nb-350-j17p3h3', 'notebook', 'Notebook spark 3.5.0 java 17 python 3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/notebook','350-j17p3h3-6.2.0-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('nb-342-j17p3h3', 'notebook', 'Notebook spark 3.4.2 java 17 python 3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/notebook','342-j17p3h3-6.2.0-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('nb-334-j17p3h3', 'notebook', 'Notebook spark 3.3.4 java 17 python 3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/notebook','334-j17p3h3-6.2.0-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('nb-334-j11p3h3', 'notebook', 'Notebook spark 3.3.4 java 11 python 3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/notebook','334-j11p3h3-6.2.0-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('box', 'box', 'Light posix client', true, true, '{{REGISTRY}}','{{REPOSITORY}}/log','box-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('grafana', 'grafana', 'image to install grafana', true, true, '{{REGISTRY}}','{{REPOSITORY}}/log','grafana-8.3.5-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('influx', 'influx', 'image to install influx', true, true, '{{REGISTRY}}','{{REPOSITORY}}/log','influxdb-1.8.10-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('influxhealth', 'influx', 'image to influx health', true, true, '{{REGISTRY}}','{{REPOSITORY}}/log','curljq-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('prometheus', 'prometheus', 'image to install prometheus', true, true, '{{REGISTRY}}','{{REPOSITORY}}/log','prometheus-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('oauth', 'oauth', 'image to install oauthproxy', true, true, '{{REGISTRY}}','{{REPOSITORY}}/oauthproxy','1.0.0-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('keycloak', 'keycloak', 'image to install keycloak', true, true, '{{REGISTRY}}','{{REPOSITORY}}/keycloak','21.1.2-debian-11-r27-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('airflow', 'airflow', 'image to install airflow', true, true, '{{REGISTRY}}','{{REPOSITORY}}/airflow','2.7.12','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('airflow_sync', 'airflow_sync', 'image to install dcp airflow sync', true, true, '{{REGISTRY}}','{{REPOSITORY}}/airflow','sync-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('airflow_loaddag', 'airflow_loaddag', 'image to load dag', true, true, '{{REGISTRY}}','{{REPOSITORY}}/airflow','dag-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('statsd', 'statsd', 'image to install airflow statsd', true, true, '{{REGISTRY}}','{{REPOSITORY}}/airflow','statsd-0.22.8-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('hive_metastore', 'hms', 'image to install hive metastore', true, true, '{{REGISTRY}}','{{REPOSITORY}}/sql','hms-3.1.2-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition, enablecache, enablelocalcache)
+    values ('sql_cache', 'trino', 'install sql engine', true, true, '{{REGISTRY}}','{{REPOSITORY}}/sql','433-cache-v2','',false, true, false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition, enablelocalcache)
+    values ('sql_443', 'trino', 'install sql engine', true, true, '{{REGISTRY}}','{{REPOSITORY}}/sql','443-v2','',false, true);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition, enablelocalcache, prestodb)
+    values ('presto_286', 'trino', 'install prestodb', true, true, '{{REGISTRY}}','{{REPOSITORY}}/sql','prestodb-286-v2','',false, false, true);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('sqlpolicy', 'sqlpolicy', 'Sql Policy', true, true, '{{REGISTRY}}','{{REPOSITORY}}/sql','policy-1.0.0-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('sqleditor', 'dbeaver', 'Sql Web Query', true, true, '{{REGISTRY}}','{{REPOSITORY}}/sql','dbeaver-21.3.0-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('solr', 'solr', 'image to install solr audit service', true, true, '{{REGISTRY}}','{{REPOSITORY}}/sql','audit-8.9.0-j11-v1','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('ranger', 'ranger', 'image to install ranger service', true, true, '{{REGISTRY}}','{{REPOSITORY}}/sql','ranger-2.4-v1','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('zookeeper', 'zookeeper', 'Install zookeeper', true, true, '{{REGISTRY}}','{{REPOSITORY}}/zookeeper','3.8.1-v2','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('nifi', 'nifi', 'image to install nifi', true, true, '{{REGISTRY}}','{{REPOSITORY}}/nifi','1.16.3','',false);
+
+
+    CREATE INDEX if not exists dcp_binary_data_check ON dcp_binary_data (servicetype, servicename, name);
+    CREATE INDEX if not exists dcp_binary_data_check_type_namme ON dcp_binary_data (servicetype, name);
+
+    CREATE INDEX if not exists dcp_queues_check ON dcp_queues (id, idprovider, name);
+
+    CREATE INDEX if not exists dcp_profiles_check ON dcp_profiles (idprovider, service);
+
+    CREATE INDEX if not exists dcp_priority_class_check ON dcp_priority_class (id, idprovider, name);
+    CREATE INDEX if not exists dcp_priority_class_list ON dcp_priority_class (idprovider, name, enabled);
+
+    CREATE INDEX if not exists dcp_namespaces_check ON dcp_namespaces (name, idprovider, id);
+    CREATE INDEX if not exists dcp_namespaces_idprov_name_status ON dcp_namespaces (idprovider, name, enabled);
+    CREATE INDEX if not exists dcp_namespaces_publicns ON dcp_namespaces (publicns);
+
+    CREATE INDEX if not exists dcp_storageclass_check ON dcp_storageclass (name, idprovider, id);
+    CREATE INDEX if not exists dcp_storageclass_idprov_name_status_type ON dcp_storageclass (idprovider, name, enabled, sctype);
+    CREATE INDEX if not exists dcp_storageclass_publicsc ON dcp_storageclass (publicsc);
+
+    CREATE INDEX if not exists dcp_secrets_idprov_name ON dcp_secrets (idprovider, name);
+
+    CREATE INDEX if not exists dcp_catalogs_check ON dcp_catalogs (idprovider, name,  id);
+
+    CREATE INDEX if not exists dcp_airflow_dags_history_original_id ON dcp_airflow_dags_history (original_id);
+
+    CREATE INDEX if not exists dcp_instances_name ON dcp_instances (name);
+    CREATE INDEX if not exists dcp_instances_hostname ON dcp_instances (hostname);
+    CREATE INDEX if not exists dcp_instances_type_prov_status ON dcp_instances (instancetype, provider, namespace, name, status, enabled);
+
+    CREATE INDEX if not exists dcp_admin_users_userid ON dcp_admin_users (userid);
+
+    CREATE INDEX if not exists dcp_spark_applications_obj_name_index ON dcp_spark_applications_obj (name);
+    CREATE INDEX if not exists dcp_spark_applications_obj_idlogcluster_index ON dcp_spark_applications_obj (idlogcluster);
+    CREATE INDEX if not exists dcp_spark_applications_obj_idmonitoringcluster_index ON dcp_spark_applications_obj (idmonitoringcluster);
+    CREATE INDEX if not exists dcp_spark_applications_obj_idsparkcluster_index ON dcp_spark_applications_obj (idsparkcluster);
+
+    CREATE INDEX if not exists dcp_images_name_index ON dcp_images (name);
+    CREATE INDEX if not exists dcp_models_name_index ON dcp_models (name);
+
+    CREATE INDEX if not exists dcp_deploy_events_name_index ON dcp_deploy_events (name);
+
+
+    CREATE INDEX if not exists dcp_spark_pod_metrics_a on dcp_spark_pod_metrics(idprovider, dateformat, dcpapplicationname, tenant, queue);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_b on dcp_spark_pod_metrics(idprovider, dateformat, dcpapplicationname, tenant);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_c on dcp_spark_pod_metrics(idprovider, dateformat, dcpapplicationname, queue);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_d on dcp_spark_pod_metrics(idprovider, dateformat, dcpapplicationname);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_e on dcp_spark_pod_metrics(idprovider, dateformat, tenant, queue);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_f on dcp_spark_pod_metrics(idprovider, dateformat, tenant);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_g on dcp_spark_pod_metrics(idprovider, dateformat, queue);
+
+    CREATE INDEX if not exists dcp_spark_pod_metrics_root_a on dcp_spark_pod_metrics_root(idprovider, dateformat, dcpapplicationname, tenant, queue);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_root_b on dcp_spark_pod_metrics_root(idprovider, dateformat, dcpapplicationname, tenant);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_root_c on dcp_spark_pod_metrics_root(idprovider, dateformat, dcpapplicationname, queue);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_root_d on dcp_spark_pod_metrics_root(idprovider, dateformat, dcpapplicationname);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_root_e on dcp_spark_pod_metrics_root(idprovider, dateformat, tenant, queue);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_root_f on dcp_spark_pod_metrics_root(idprovider, dateformat, tenant);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_root_g on dcp_spark_pod_metrics_root(idprovider, dateformat, queue);
+
+    CREATE INDEX if not exists dcp_spark_pod_metrics_driver_a on dcp_spark_pod_metrics_driver(idprovider, dateformat, dcpapplicationname, tenant, queue);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_driver_b on dcp_spark_pod_metrics_driver(idprovider, dateformat, dcpapplicationname, tenant);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_driver_c on dcp_spark_pod_metrics_driver(idprovider, dateformat, dcpapplicationname, queue);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_driver_d on dcp_spark_pod_metrics_driver(idprovider, dateformat, dcpapplicationname);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_driver_e on dcp_spark_pod_metrics_driver(idprovider, dateformat, tenant, queue);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_driver_f on dcp_spark_pod_metrics_driver(idprovider, dateformat, tenant);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_driver_g on dcp_spark_pod_metrics_driver(idprovider, dateformat, queue);
+
+
+    CREATE INDEX if not exists dcp_spark_pod_metrics_launcher_a on dcp_spark_pod_metrics_launcher(idprovider, dateformat, dcpapplicationname, tenant, queue);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_launcher_b on dcp_spark_pod_metrics_launcher(idprovider, dateformat, dcpapplicationname, tenant);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_launcher_c on dcp_spark_pod_metrics_launcher(idprovider, dateformat, dcpapplicationname, queue);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_launcher_d on dcp_spark_pod_metrics_launcher(idprovider, dateformat, dcpapplicationname);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_launcher_e on dcp_spark_pod_metrics_launcher(idprovider, dateformat, tenant, queue);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_launcher_f on dcp_spark_pod_metrics_launcher(idprovider, dateformat, tenant);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_launcher_g on dcp_spark_pod_metrics_launcher(idprovider, dateformat, queue);
+
+    CREATE INDEX if not exists dcp_spark_pod_metrics_launcher_root_a on dcp_spark_pod_metrics_launcher_root(idprovider, dateformat, dcpapplicationname, tenant, queue);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_launcher_root_b on dcp_spark_pod_metrics_launcher_root(idprovider, dateformat, dcpapplicationname, tenant);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_launcher_root_c on dcp_spark_pod_metrics_launcher_root(idprovider, dateformat, dcpapplicationname, queue);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_launcher_root_d on dcp_spark_pod_metrics_launcher_root(idprovider, dateformat, dcpapplicationname);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_launcher_root_e on dcp_spark_pod_metrics_launcher_root(idprovider, dateformat, tenant, queue);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_launcher_root_f on dcp_spark_pod_metrics_launcher_root(idprovider, dateformat, tenant);
+    CREATE INDEX if not exists dcp_spark_pod_metrics_launcher_root_g on dcp_spark_pod_metrics_launcher_root(idprovider, dateformat, queue);
+
+    CREATE INDEX if not exists dcp_sql_query_stats_index ON dcp_sql_query_stats (clustername, queryid);
+    CREATE INDEX if not exists dcp_deploy_events_index ON dcp_deploy_events (name);
+    CREATE INDEX if not exists dcp_spark_cluster_metrics_id_creationdate ON dcp_spark_cluster_metrics (id, creationdate);
