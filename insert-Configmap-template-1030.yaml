@@ -1,0 +1,1051 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: insert-cm
+data:
+  insert.sql: |
+
+    #delete from dcp_images;
+    #delete from dcp_priority_class;
+    #delete from dcp_job_types;
+    #delete from dcp_admin_policies;
+    #delete from dcp_pipeline_jobtype;
+    #delete from dcp_params;
+    #delete from dcp_cloud_providers_obj;
+    #delete from dcp_ldap_conf;
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('cache', 'cache', 'cache service', true, true, '{{REGISTRY}}','{{REPOSITORY}}/cache','2.10.0-SNAPSHOT','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('sqlpolicy', 'sqlpolicy', 'Sql Policy', true, true, '{{REGISTRY}}','{{REPOSITORY}}/sql','policy-1.0.0','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('java21', 'java', 'Java 21', true, true, '{{REGISTRY}}','{{REPOSITORY}}/java','21-jre','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('java17', 'java', 'Java 17', true, true, '{{REGISTRY}}','{{REPOSITORY}}/java','17-jre','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('java11', 'java', 'Java 11', true, true, '{{REGISTRY}}','{{REPOSITORY}}/java','11-jre','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('proxy', 'proxy', 'DCP proxy', true, true, '{{REGISTRY}}','{{REPOSITORY}}/proxy','1.0.0','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('sp-350-j17p3h3', 'spark', 'Spark 3.5.0 java 17 Python3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/spark','350-j17p3h3','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('sp-342-j17p3h3', 'spark', 'Spark 3.4.2 java 17 Python3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/spark','342-j17p3h3','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('sp-334-j11p3h3', 'spark', 'Spark 3.3.4 java 11 Python3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/spark','334-j11p3h3','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('sp-334-j17p3h3', 'spark', 'Spark 3.3.4 java 17 Python3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/spark','334-j17p3h3','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('sparkoperator-3.1.1', 'sparkoperator', 'Spark Operator 3.1.1', true, true, '{{REGISTRY}}','{{REPOSITORY}}/spark','operator-v1beta2-1.3.8-3.1.1-1.0.0','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('nb-334-j11p3h3', 'notebook', 'Notebook spark 3.3.4 java 11 python 3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/notebook','334-j11p3h3-6.2.0','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('nb-334-j17p3h3', 'notebook', 'Notebook spark 3.3.4 java 17 python 3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/notebook','334-j17p3h3-6.2.0','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('nb-342-j17p3h3', 'notebook', 'Notebook spark 3.4.2 java 17 python 3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/notebook','342-j17p3h3-6.2.0','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('nb-350-j17p3h3', 'notebook', 'Notebook spark 3.5.0 java 17 python 3 Hadoop3', true, true, '{{REGISTRY}}','{{REPOSITORY}}/notebook','350-j17p3h3-6.2.0','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('grafana', 'grafana', 'image to install grafana', true, true, '{{REGISTRY}}','{{REPOSITORY}}/log','grafana-8.3.5','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('influx', 'influx', 'image to install influx', true, true, '{{REGISTRY}}','{{REPOSITORY}}/log','influxdb-1.8.10','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('postgresql', 'postgres', 'image to install postgresql database', true, true, '{{REGISTRY}}','{{REPOSITORY}}/pgs','replication-16.1.0-debian-11-r15','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('oauth', 'oauth', 'image to install oauthproxy', true, true, '{{REGISTRY}}','{{REPOSITORY}}/oauthproxy','1.0.0','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('keycloak', 'keycloak', 'image to install keycloak', true, true, '{{REGISTRY}}','{{REPOSITORY}}/keycloak','21.1.2-debian-11-r27','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('airflow', 'airflow', 'image to install airflow', true, true, '{{REGISTRY}}','{{REPOSITORY}}/airflow','2.7.0','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('airflow_sync', 'airflow_sync', 'image to install dcp airflow sync', true, true, '{{REGISTRY}}','{{REPOSITORY}}/airflow','sync-v1','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('airflow_loaddag', 'airflow_loaddag', 'image to load dag', true, true, '{{REGISTRY}}','{{REPOSITORY}}/airflow','dag-v1','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('statsd', 'statsd', 'image to install airflow statsd', true, true, '{{REGISTRY}}','{{REPOSITORY}}/airflow','statsd-v0.22.8','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('prometheus', 'prometheus', 'image to install prometheus', true, true, '{{REGISTRY}}','{{REPOSITORY}}/prometheus','v1','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('box', 'box', 'Light posix client', true, true, '{{REGISTRY}}','{{REPOSITORY}}/log','box-v1','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('zookeeper', 'zookeeper', 'Install zookeeper', true, true, '{{REGISTRY}}','{{REPOSITORY}}/zookeeper','3.8.1-v1','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('hive_metastore', 'hms', 'image to install hive metastore', true, true, '{{REGISTRY}}','{{REPOSITORY}}/sql','hms-3.1.2-v1','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('solr', 'solr', 'image to install solr audit service', true, true, '{{REGISTRY}}','{{REPOSITORY}}/sql','audit-8.9.0-j11-v1','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('ranger', 'ranger', 'image to install ranger service', true, true, '{{REGISTRY}}','{{REPOSITORY}}/sql','ranger-2.4-v1','',false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition, enablecache, enablelocalcache)
+    values ('sql_cache', 'trino', 'install sql engine', true, true, '{{REGISTRY}}','{{REPOSITORY}}/sql','433-cache','',false, true, false);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition, enablelocalcache)
+    values ('sql_443', 'trino', 'install sql engine', true, true, '{{REGISTRY}}','{{REPOSITORY}}/sql','443-v1','',false, true);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition, enablelocalcache, prestodb)
+    values ('presto_286', 'trino', 'install prestodb', true, true, '{{REGISTRY}}','{{REPOSITORY}}/prestodb','286','',false, false, true);
+
+    insert into dcp_images (name, type, description, enabled, dcp, registry, repository, tag, pullsecret, entrepriseedition) 
+    values ('nifi', 'nifi', 'image to install nifi', true, true, '{{REGISTRY}}','{{REPOSITORY}}/nifi','1.16.3','',false);
+
+    insert into dcp_job_types (jobtype) values('spark');
+    insert into dcp_job_types (jobtype) values('python');
+    insert into dcp_job_types (jobtype) values('docker');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('namespace',true,'CREATE_NAMESPACE');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('namespace',true,'DELETE_NAMESPACE');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('namespace',true,'DEPLOY_NAMESPACE');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('storageclass',true,'CREATE_STORAGECLASS');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('storageclass',true,'DELETE_STORAGECLASS');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('storageclass',true,'DEPLOY_STORAGECLASS');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('image',true,'CREATE_IMAGE');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('image',true,'DELETE_IMAGE');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('secretstore',true,'CREATE_SECRETSTORE');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('secretstore',true,'DELETE_SECRETSTORE');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('bucket',true,'CREATE_BUCKET');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('bucket',true,'DELETE_BUCKET');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('bucket',true,'DELETE_BUCKET_DATA');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('bucket',true,'UPLOAD_BUCKET_DATA');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('hadoop',true,'CREATE_HADOOP');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('hadoop',true,'DELETE_HADOOP');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('workspace',true,'CREATE_WORKSPACE');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('workspace',true,'RUN_WORKSPACE');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('workspace',true,'DELETE_WORKSPACE');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('workspace',true,'VIEWCONF_WORKSPACE');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('workspace',true,'IMPORT_WORKSPACE');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('workspace',true,'CREATE_WORKSPACE_GROUP');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('workspace',true,'CREATE_WORKSPACE_MEMBER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('workspace',true,'DELETE_WORKSPACE_MEMBER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('workspace',true,'ASSIGN_ROLE_TO_GROUP');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('profile',true,'CREATE_PROFILE');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('profile',true,'DELETE_PROFILE');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('artifact',true,'CREATE_ARTIFACT');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('artifact',true,'DELETE_ARTIFACT');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkapps',true,'CREATE_SPARKAPPLICATION');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkapps',true,'RUN_SPARKAPPLICATION');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkapps',true,'DELETE_SPARKAPPLICATION');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkapps',true,'VIEWCONF_SPARKAPPLICATION');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkapps',true,'VIEWMONITORING_SPARKAPPLICATION');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkapps',true,'IMPORT_SPARKAPPLICATION');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkcluster',true,'CREATE_SPARKCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkcluster',true,'RUN_SPARKCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkcluster',true,'DELETE_SPARKCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkcluster',true,'VIEWCONF_SPARKCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkcluster',true,'IMPORT_SPARKCLUSTER');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkmonitoring',true,'CREATE_SPARKMONITORING');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkmonitoring',true,'RUN_SPARKMONITORING');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkmonitoring',true,'DELETE_SPARKMONITORING');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkmonitoring',true,'VIEWCONF_SPARKMONITORING');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkmonitoring',true,'IMPORT_SPARKMONITORING');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkhistory',true,'CREATE_SPARKHISTORY');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkhistory',true,'RUN_SPARKHISTORY');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkhistory',true,'DELETE_SPARKHISTORY');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkhistory',true,'VIEWCONF_SPARKHISTORY');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkhistory',true,'IMPORT_SPARKHISTORY');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkoperator',true,'CREATE_SPARKOPERATOR');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkoperator',true,'RUN_SPARKOPERATOR');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkoperator',true,'DELETE_SPARKOPERATOR');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkoperator',true,'VIEWCONF_SPARKOPERATOR');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkoperator',true,'IMPORT_SPARKOPERATOR');
+
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('notebook',true,'CREATE_NOTEBOOK');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('notebook',true,'RUN_NOTEBOOK');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('notebook',true,'DELETE_NOTEBOOK');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('notebook',true,'VIEWCONF_NOTEBOOK');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('notebook',true,'IMPORT_NOTEBOOK');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('dag',true,'CREATE_DAG');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('dag',true,'RUN_DAG');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('dag',true,'DELETE_DAG');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('dag',true,'DEPLOY_DAG');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('dag',true,'VIEWCONF_DAG');
+
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('pipeline',true,'CREATE_WORKFLOW');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('pipeline',true,'DELETE_WORKFLOW');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('pipeline',true,'RUN_WORKFLOW');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('pipeline',true,'VIEWCONF_WORKFLOW');
+
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkartifact',true,'LIST_ARTIFACT');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkartifact',true,'UPLOAD_ARTIFACT');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sparkartifact',true,'DELETE_ARTIFACT');
+
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('airflow',true,'CREATE_AIRFLOW');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('airflow',true,'RUN_AIRFLOW');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('airflow',true,'DELETE_AIRFLOW');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('airflow',true,'VIEWCONF_AIRFLOW');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('airflow',true,'VIEWMONITORING_AIRFLOW');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('airflow',true,'IMPORT_AIRFLOW');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('airflow',true,'CREATE_CONNECTION_AIRFLOW');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sqlcluster',true,'CREATE_SQLCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sqlcluster',true,'RUN_SQLCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sqlcluster',true,'DELETE_SQLCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sqlcluster',true,'VIEWCONF_SQLCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sqlcluster',true,'IMPORT_SQLCLUSTER');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('ranger',true,'CREATE_SQLPOLICY');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('ranger',true,'RUN_SQLPOLICY');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('ranger',true,'DELETE_SQLPOLICY');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('ranger',true,'VIEWCONF_SQLPOLICY');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('ranger',true,'IMPORT_SQLPOLICY');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('ranger',true,'LIST_SQLPOLICY_AUDITS');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('ranger',true,'CREATE_SQLPOLICY_GROUPS');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('ranger',true,'LIST_SQLPOLICY_GROUPS');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('ranger',true,'CREATE_SQLPOLICY_USERS');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('ranger',true,'LIST_SQLPOLICY_USERS');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('ranger',true,'CREATE_SQLPOLICY_RULES');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('ranger',true,'LIST_SQLPOLICY_RULES');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('hms',true,'CREATE_HMSCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('hms',true,'RUN_HMSCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('hms',true,'DELETE_HMSCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('hms',true,'VIEWCONF_HMSCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('hms',true,'IMPORT_HMSCLUSTER');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('catalog',true,'CREATE_SQLCATALOG');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('catalog',true,'DELETE_SQLCATALOG');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sqljob',true,'CREATE_SQLJOB');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sqljob',true,'DELETE_SQLJOB');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('sqljob',true,'SCHEDULE_SQLJOB');
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('audit',true,'CREATE_AUDITCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('audit',true,'RUN_AUDITCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('audit',true,'DELETE_AUDITCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('audit',true,'VIEWCONF_AUDITCLUSTER');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('audit',true,'IMPORT_AUDITCLUSTER');
+
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('keycloak',true,'CREATE_KEYCLOAK');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('keycloak',true,'RUN_KEYCLOAK');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('keycloak',true,'DELETE_KEYCLOAK');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('keycloak',true,'VIEWCONF_KEYCLOAK');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('keycloak',true,'IMPORT_KEYCLOAK');
+
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('nifi',true,'CREATE_NIFI');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('nifi',true,'RUN_NIFI');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('nifi',true,'DELETE_NIFI');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('nifi',true,'VIEWCONF_NIFI');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('nifi',true,'IMPORT_NIFI');
+
+
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('cache',true,'CREATE_CACHE');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('cache',true,'RUN_CACHE');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('cache',true,'DELETE_CACHE');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('cache',true,'VIEWCONF_CACHE');
+    insert into dcp_admin_policies(servicename, enabled, policyname) values ('cache',true,'IMPORT_CACHE');
+
+
+
+    insert into dcp_pipeline_jobtype (name, description, title, jobtype, enabled, helper) values ('spark-job', 'Spark Job', 'Spark Job', 'spark', true, '');
+    insert into dcp_pipeline_jobtype (name, description, title, jobtype, enabled, helper) values ('query-job', 'Sql Job', 'Sql Job', 'sql', true, '');
+    insert into dcp_pipeline_jobtype (name, description, title, jobtype, enabled, helper) values ('python-job', 'Python Job', 'Python Job', 'python', false, '');
+    insert into dcp_pipeline_jobtype (name, description, title, jobtype, enabled, helper) values ('docker-job', 'Docker Job', 'Docker Job', 'docker', false, '');
+    insert into dcp_pipeline_jobtype (name, description, title, jobtype, enabled, helper) values ('bash-job', 'Bash Job', 'Bash Job', 'bash', false, '');
+    insert into dcp_pipeline_jobtype (name, description, title, jobtype, enabled, helper) values ('ingestion-job', 'Ingestion Hook', 'Ingestion Hook', 'ingestion', false, '');
+    insert into dcp_pipeline_jobtype (name, description, title, jobtype, enabled, helper) values ('s3-sensor', 'S3 sensor', 'S3 sensor', 's3sensor', false, '');
+
+    insert into dcp_services(servicename, servicekey, enabled) values('dcp-tenant', 'tenant', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('keycloak-service', 'keycloak', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('dcp-bucket', 'bucket', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('dcp-pipeline-editor', 'pipeline', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('dcp-orchestrator', 'airflow', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('spark-history', 'sphs', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('spark-monitoring', 'spmn', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('spark-apps', 'sparkjob', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('dcp-single-notebook', 'singlenotebook', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('spark-artifact', 'sparkartifact', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('sql-service', 'sql', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('dcp-policy-service', 'sqlpolicy', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('metastore-service', 'sqlhms', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('catalog-service', 'sqlcatalog', true);
+    insert into dcp_services(servicename, servicekey, enabled) values('cache-service', 'cache', true);
+
+    INSERT INTO dcp_params ("name",config) 
+    VALUES (
+    'params',
+    '{
+        "pullpolicy": "Always",
+        "clusterdomain": "svc.cluster.local",
+        "initimage": "",
+        "initimagetrino": "",
+        "dirvalues": "{{DIRVALUES}}",
+        "helmcommandinstall": "helm upgrade --cleanup-on-fail --install %s %s --namespace %s %s --values %s",
+        "helmcommanduninstall": "helm --namespace %s uninstall %s",
+        "solrrepo": "dcp-solr",
+        "hmsrepo": "dcp-metastore",
+        "rangerrepo": "dcp-ranger",
+        "queryrepo": "dcp-sql",
+        "airflowrepo": "dcp-airflow",
+        "dcpsparkoperatortemplate": "",
+        "dcpsparkoperatorsa": "dcp-spark-sa",
+        "kubedefaultconfig": true,
+        "kubehost": "{{KUBEHOST}}",
+        "kubesecured": true,
+        "kubeport": "443",
+        "cacert": "none",
+        "token": "none",
+        "dcpuser": "test",
+        "dcppassword": "test",
+        "sparkjavachecker": "",
+        "sparkrepo": "dcp-spark-cluster",
+        "sparkmngrepo": "dcp-spark-monitoring",
+        "sparkhistoryrepo": "dcp-spark-history",
+        "nifirepo": "dcp-nifi",
+        "orchestratorurl": "",
+        "orchestratoruser": "admin",
+        "orchestratorpassword": "admin",
+        "dcpstorageurl": "https://dcp-storage-minio.{{NAMESPACE}}.svc.cluster.local:9000",
+        "dcpstorageaccesskey": "{{STORAGE_ACCESSKEY}}",
+        "dcpstoragesecretkey": "{{STORAGE_SECRETKEY}}",
+        "dcpstoragebucket": "historyserver",
+        "dcpsparkartibucket": "sparkartifact",
+        "uploaddirectory": "{{UPLOADDIRECTORY}}",
+        "dcpstoragepathstyle": true,
+        "dcpstoragesignertype": "S3SignerType",
+        "dcpdashboardspark": "/d/-H0ElOqmit/spark-dashboard?orgId=1&refresh=5s",
+        "query_impersonation": false,
+        "query_impersonation_user": "test",
+        "query_impersonation_password": "test",
+        "useingress": true,
+        "defaultgateway": "localhost:18080",
+        "imagenamepgs": "postgresql",
+        "imagenamekclkpgs": "postgresql",
+        "portpgs": 5432,
+        "requestcpupgs": 250,
+        "unitrequestcpupgs": "m",
+        "limitcpupgs": 500,
+        "unitlimitcpupgs": "m",
+        "requestmempgs": 256,
+        "unitrequestmempgs": "Mi",
+        "limitmempgs": 512,
+        "unitlimitmempgs": "Mi",
+        "tokenFile": "",
+        "multicloud": false,
+        "addrandom": true,
+        "createsparkhistorypath": {{CREATESPARKHISTORYPATH}},
+        "yschedulernamespace": "{{NAMESPACE}}",
+        "yschedulername": "dcp-scheduler",
+        "yschedulerservice": "http://dcpscheduler-service.{{NAMESPACE}}.{{CLUSTERDOMAIN}}:9889",
+        "vschedulername": "volcano",
+        "vschedulernamespace": "volcano",
+        "dcpyscheduler": "dcp-scheduler",
+        "dcpstorageregion": "",
+        "dcpstoragesslmode": false,
+        "websocketprotocol": "wss",
+        "generateyamlfile": false,
+        "dcpingress": "{{INGRESSHOSTNAME}}",
+        "enablecontextpath": true,
+        "sparkrequestmemory": "512M",
+        "sparkrequestcpu": "500m",
+        "sparklimitmemory": "512M",
+        "sparklimitcpu": "500m",
+        "orchestratorsync": "http://{{INGRESSHOSTNAME}}/sync/dcp/orchestrator/upload",
+        "orchestratordcpengine": true,
+        "dcpproxyuri": "sparkui",
+        "dcpproxyenabled": true,
+        "dcpproxyprotocol": "https://",
+        "objectstoragefs": "s3a",
+        "persistdag": true,
+        "persistlog": true,
+        "models": "sparkmng,sparkhistory,sparkcluster,solr,ranger,query,priorityclass,objectstorage,ingresssecret,hms,externalsecret,secretstore,dcp-pipeline-headers,dcp-pipeline,dcp-pipelinespark-task,dcp-sql,airflow,dcp-spark-pod,dcp-spark-sa-rbac",
+        "insertmodelatstartup": true,
+        "enableaudittrail": true,
+        "linkgroupservice": true,
+        "dcpwaittime": 2000,
+        "dcpgroupprovider": "file",
+        "dcpqueryusersystem": "dcpadmin",
+        "dcpdashboardquery": "http://{{INGRESSHOSTNAME}}/loki/d/TGzKne5Wk/presto-exporter?orgId=1&refresh=5s&from=now-5m&to=now",
+        "globalregistry": "",
+        "repositorydcpbox": "",
+        "dcpboxtag": "",
+        "cataloglocationroot": "/etc/trino/resources/",
+        "cataloglocationsuffix": "kerberos",
+        "certmanager": false,
+        "enableauthorize": true,
+        "repositoryzookeeper": "",
+        "dcpzookeepertag": "",
+        "dcpsecret": "{{SECRETNAME}}",
+        "dcpnamespace": "{{NAMESPACE}}",
+        "passwd": true,
+        "rootrepo": "{{ROOTREPO}}",
+        "cacerta": "",
+        "cacertb": "",
+        "sparkjavacheckerb": "",
+        "statsddomain": "svc",
+        "objectorageprotocol": "s3a,s3n,s3",
+        "objectstorageconf": "spark.hadoop.fs.s3a.bucket.{{name}}.aws.credentials.provider=org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider,spark.hadoop.fs.s3a.bucket.{{name}}.impl=org.apache.hadoop.fs.s3a.S3AFileSystem,spark.hadoop.fs.s3a.bucket.{{name}}.change.detection.version.require=false,spark.hadoop.fs.s3a.bucket.{{name}}.access.key={{accesskey}},spark.hadoop.fs.s3a.bucket.{{name}}.secret.key={{secretkey}},spark.hadoop.fs.s3a.bucket.{{name}}.endpoint={{endpoint}},spark.hadoop.fs.s3a.bucket.{{name}}.path.style.access={{styleaccess}},spark.hadoop.fs.s3a.bucket.{{name}}.signing-algorithm={{signertype}},spark.hadoop.fs.s3a.bucket.{{name}}.connection.ssl.enabled={{sslmode}},spark.hadoop.fs.s3a.connection.timeout=1200000,spark.hadoop.fs.s3a.connection.maximum=200,spark.hadoop.fs.s3a.fast.upload=true,spark.hadoop.fs.s3a.readahead.range=256K,spark.hadoop.fs.s3a.input.fadvise=random,spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem",
+        "objectstoragesacommitterconf": "spark.hadoop.fs.s3a.block.size=512M\nspark.hadoop.fs.s3a.connection.timeout=200000\nspark.hadoop.fs.s3a.fast.upload=true\nspark.hadoop.fs.s3a.readahead.range=256K\nspark.hadoop.fs.s3a.input.fadvise=random\nspark.hadoop.fs.s3a.committer.name=magic\nspark.hadoop.fs.s3a.commiter.magic.enabled=true\nspark.hadoop.fs.s3a.commiter.staging.conflict-mode=replace\nspark.hadoop.fs.s3a.committer.staging.unique-filenames=true\nspark.hadoop.fs.s3a.committer.staging.abort.pending.uploads=true\nspark.hadoop.mapreduce.outputcommitter.factory.scheme.s3a=org.apache.hadoop.fs.s3a.commit.S3ACommitterFactory\nspark.sql.sources.commitProtocolClass=org.apache.spark.internal.io.cloud.PathOutputCommitProtocol\nspark.sql.parquet.output.committer.class=org.apache.spark.internal.io.cloud.BindingParquetOutputCommitter\nspark.hadoop.fs.s3a.committer.staging.tmp.path=/tmp/staging\nspark.hadoop.fs.s3a.directory.marker.retention=keep\nspark.hadoop.fs.s3a.commiter.threads={{osconcurrency}}\nspark.hadoop.fs.s3a.threads.max={{osconcurrency}}\nspark.hadoop.fs.s3a.connection.maximum={{osconcurrency}}",
+        "objectstoragesdirectorycommitterconf":"spark.hadoop.fs.s3a.committer.name=directory\nspark.hadoop.fs.s3a.committer.staging.tmp.path=/tmp/staging\nspark.hadoop.fs.s3a.committer.magic.enabled=false\nspark.hadoop.fs.s3a.committer.staging.abort.pending.uploads=true\nspark.hadoop.fs.s3a.committer.staging.unique-filenames=true\nspark.hadoop.fs.s3a.committer.threads=2048\nspark.hadoop.fs.s3a.bucket.{{name}}.committer.staging.abort.pending.uploads=true\nspark.hadoop.fs.s3a.bucket.{{name}}.committer.staging.conflict-mode=append\nspark.hadoop.fs.s3a.buffer.dir=/tmp/s3a\nspark.hadoop.fs.s3a.threads.max=2048\nspark.hadoop.fs.s3a.connection.establish.timeout=5000\nspark.hadoop.fs.s3a.fast.upload.active.blocks=2048\nspark.hadoop.fs.s3a.fast.upload.buffer=disk\nspark.hadoop.fs.s3a.max.total.tasks=2048\nspark.hadoop.fs.s3a.multipart.size=512M\nspark.hadoop.fs.s3a.multipart.threshold=512M\nspark.hadoop.fs.s3a.socket.recv.buffer=65536\nspark.hadoop.fs.s3a.socket.send.buffer=65536",
+        "sparkpodtemplatedir": "/opt/spark/template",
+        "injectglobalconfindcpoperatrovg": false,
+        "sparkworkdir": "/opt/spark/work-dir",
+        "sparkmonitoringconf": "spark.metrics.conf.*.sink.graphite.class=org.apache.spark.metrics.sink.GraphiteSink;spark.metrics.conf.*.sink.graphite.host={{monitoringservicename}};spark.metrics.conf.*.sink.graphite.port=2003;spark.metrics.conf.*.sink.graphite.period=10;spark.metrics.conf.*.sink.graphite.unit=seconds;spark.metrics.conf.*.sink.graphite.prefix={{name}};spark.metrics.conf.*.source.jvm.class=org.apache.spark.metrics.source.JvmSource;spark.metrics.staticSources.enabled=true;spark.metrics.appStatusSource.enabled=true;spark.metrics.executorMetricsSource.enabled=true;spark.plugins=ch.cern.CloudFSMetrics,ch.cern.CgroupMetrics;spark.cernSparkPlugin.cloudFsName=s3a",
+        "sparkshuffleconf": "spark.dynamicAllocation.enabled=true;spark.dynamicAllocation.minExecutors={{minExecutors}};spark.dynamicAllocation.maxExecutors={{maxExecutors}};spark.dynamicAllocation.initialExecutors={{initialExecutors}};spark.dynamicAllocation.executorIdleTimeout={{executorIdleTimeout}};spark.dynamicAllocation.schedulerBacklogTimeout={{schedulerBacklogTimeout}};spark.kubernetes.allocation.batch.size={{podbatchsize}};spark.shuffle.service.enabled=true;spark.dynamicAllocation.shuffleTracking.enabled=true;spark.decommission.enabled=true;spark.storage.decommission.shuffleBlocks.enabled=true",
+        "sparkmonitoringclusterconf": "spark.metrics.staticSources.enabled=true;spark.metrics.appStatusSource.enabled=true;spark.metrics.executorMetricsSource.enabled=true;spark.sql.streaming.metricsEnabled=true;spark.plugins=ch.cern.CloudFSMetrics,ch.cern.CgroupMetrics;spark.cernSparkPlugin.cloudFsName=s3a",
+        "sparkprometheusconf": "spark.ui.prometheus.enabled=true;spark.executor.processTreeMetrics.enabled=true;spark.kubernetes.driver.annotation.prometheus.io/scrape=true;spark.kubernetes.driver.annotation.prometheus.io/path=/metrics/executors/prometheus/;spark.kubernetes.driver.annotation.prometheus.io/port=4040;spark.kubernetes.driver.service.annotation.prometheus.io/scrape=true;spark.kubernetes.driver.service.annotation.prometheus.io/path=/metrics/driver/prometheus/;spark.kubernetes.driver.service.annotation.prometheus.io/port=4040;spark.metrics.conf.*.sink.prometheusServlet.class=org.apache.spark.metrics.sink.PrometheusServlet;spark.metrics.conf.*.sink.prometheusServlet.path=/metrics/driver/prometheus/;spark.metrics.conf.master.sink.prometheusServlet.path=/metrics/master/prometheus/;spark.metrics.conf.applications.sink.prometheusServlet.path=/metrics/applications/prometheus/",
+        "objectsstoragemaxkeys": 500,
+        "sparkoperatorrepo": "dcp-spark-operator",
+        "refreshinstance": true,
+        "serverUrl": "",
+        "adminUsername": "",
+        "adminPassword": "",
+        "adminRealm": "master",
+        "whitelistdomain": ".test:*",
+        "sessionstore": "redis",
+        "redisurl": "redis://{{REDIS_SERVICENAME}}.{{NAMESPACE}}.{{CLUSTERDOMAIN}}:6379",
+        "redispassword": "{{REDISPASWORD}}",
+        "anonymousauthent": true,
+        "proxybyappli": "dcp-proxy-appli",
+        "sqlpolicyrepo": "dcp-sql-policy",
+        "cacherepo": "dcp-cache",
+        "keycloaktls": "",
+        "keycloak": "dcp-keycloak",
+        "altnames": "*.svc.cluster.local,*.*.*.svc.cluster.local,*.*.svc.cluster.local,*.dcp-technologies.com,*.test ,localhost,*.apps.sandbox-m2.ll9k.p1.openshiftapps.com",
+        "usekeycloakcli": false,
+        "userkeycloakservicename": {{USERKEYCLOAKSERVICENAME}},
+        "randomlength": 6,
+        "userairflowservicename": false,
+        "usekubectltodelete": true,
+        "loadcertcmd":"",
+        "kubectldelete": "kubectl -n %s delete pvc -l %s --wait=false",
+        "ldapUrl": "",
+        "givenname": "",
+        "shortname": "",
+        "email": "",
+        "airflowserviceprotocol": "http://",
+        "airflowingressprotocol": "https://",
+        "renewkubeclient": true,
+        "servicehealthenabled": true,
+        "queryeditoringress": "",
+        "dcpdashboardairflow": "/d/lFXqBGxWka/airflow-monitoring?orgId=1&refresh=5s&var-Dags=All&var-airflow_id=%s",
+        "singlenotebookrepo": "dcp-single-notebook"
+    }'
+    );
+
+
+    INSERT INTO public.dcp_ldap_conf ("name",description,enabled,url,provider,config) 
+    VALUES ('ldap','ldap conf',true,NULL,'local','
+    {    
+        "name": "ldap",
+        "description": "ldap conf",
+        "enabled": true,
+        "provider": "local",
+        "url": "{{LDAP_URL}}",
+        "ldapcertificate": "",
+        "airflowldapconfigs": [
+            {
+                "key": 0,
+                "name": "AUTH_LDAP_SEARCH",
+                "value": "ou=Users,dc=example,dc=org"
+            },
+            {
+                "key": 1,
+                "name": "AUTH_LDAP_UID_FIELD",
+                "value": "uid"
+            },
+            {
+                "key": 2,
+                "name": "AUTH_LDAP_BIND_USER",
+                "value": "cn=admin,dc=example,dc=org"
+            },
+            {
+                "key": 3,
+                "name": "AUTH_LDAP_BIND_PASSWORD",
+                "value": "bassim"
+            },
+            {
+                "key": 4,
+                "name": "AUTH_LDAP_FIRSTNAME_FIELD",
+                "value": "givenName"
+            },
+            {
+                "key": 5,
+                "name": "AUTH_LDAP_LASTNAME_FIELD",
+                "value": "sn"
+            },
+            {
+                "key": 6,
+                "name": "AUTH_LDAP_EMAIL_FIELD",
+                "value": "mail"
+            },
+            {
+                "key": 7,
+                "name": "AUTH_LDAP_GROUP_FIELD",
+                "value": "ou"
+            }
+        ],
+        "nifildapconfigs": [
+            {
+                "key": 0,
+                "name": "AUTH_LDAP_SEARCH",
+                "value": "ou=Users,dc=example,dc=org"
+            },
+            {
+                "key": 1,
+                "name": "AUTH_LDAP_BIND_USER",
+                "value": "cn=admin,dc=example,dc=org"
+            },
+            {
+                "key": 2,
+                "name": "AUTH_LDAP_BIND_PASSWORD",
+                "value": "********"
+            },
+            {
+                "key": 3,
+                "name": "NIFI_SEARCHFILTER",
+                "value": "(objectClass=*)"
+            },
+            {
+                "key": 4,
+                "name": "NIFI_USERIDENTITYATTRIBUTE",
+                "value": "cn"
+            },
+            {
+                "key": 5,
+                "name": "NIFI_AUTHSTRATEGY",
+                "value": "SIMPLE"
+            },
+            {
+                "key": 6,
+                "name": "NIFI_IDENTITYSTRATEGY",
+                "value": "USE_DN"
+            },
+            {
+                "key": 7,
+                "name": "NIFI_USERSEARCHSCOPE",
+                "value": "SUBTREE"
+            },
+            {
+                "key": 8,
+                "name": "NIFI_GROUPSEARCHSCOPE",
+                "value": "SUBTREE"
+            },
+            {
+                "key": 9,
+                "name": "NIFI_AUTHEXPIRATION",
+                "value": "12 hours"
+            }
+        ],
+        "keycloakldapconfigs": [
+            {
+                "key": 0,
+                "name": "bindDn",
+                "value": "cn=admin,dc=example,dc=org"
+            },
+            {
+                "key": 1,
+                "name": "bindCredential",
+                "value": "bassim"
+            },
+            {
+                "key": 2,
+                "name": "usersDn",
+                "value": "ou=Users,dc=example,dc=org"
+            },
+            {
+                "key": 3,
+                "name": "usernameLDAPAttribute",
+                "value": "uid"
+            },
+            {
+                "key": 4,
+                "name": "RDNLDAPattribute",
+                "value": "uid"
+            },
+            {
+                "key": 5,
+                "name": "UUIDLDAPattribute",
+                "value": "uid"
+            },
+            {
+                "key": 6,
+                "name": "userObjectClasses",
+                "value": "person, organizationalPerson, user"
+            }
+        ],
+        "sqlldapconfigs": [
+            {
+                "key": 3,
+                "name": "bindDn",
+                "value": "cn=admin,dc=example,dc=org"
+            },
+            {
+                "key": 4,
+                "name": "bindCredential",
+                "value": "bassim"
+            },
+            {
+                "key": 5,
+                "name": "allowInsecure",
+                "value": "true"
+            },
+            {
+                "key": 6,
+                "name": "bindPattern",
+                "value": "cn=${USER},ou=Users,dc=example,dc=org"
+            },
+            {
+                "key": 7,
+                "name": "baseDn",
+                "value": "ou=Users,dc=example,dc=org"
+            },
+            {
+                "key": 8,
+                "name": "authPattern",
+                "value": "(&(objectclass=person)(cn=${USER}))"
+            }
+        ]
+    }
+    ');
+
+    DO $$
+    DECLARE
+        idprovider INT;
+    BEGIN
+    INSERT INTO dcp_cloud_providers_obj ("name",description,enabled,provider,config) 
+    VALUES 
+    ('local','local cluster',true,NULL,'
+    {
+        "key": 1,
+        "name": "local",
+        "dcpprefix": "{{PREFIX}}",
+        "description": "k8S cluster",
+        "enabled": true,
+        "provider": null,
+        "hostnamelength": 10,
+        "dcpnamespace": "{{NAMESPACE}}",
+        "dcpsecret": "{{SECRETNAME}}",
+        "clusterdomain": "{{CLUSTERDOMAIN}}",
+        "pullpolicy": "{{PULLPOLICY}}",
+        "passwd": true,
+        "certmanager": false,
+        "servicehealthenabled": false,
+        "autoupdateservicestatus": true,
+        "isopenshift": {{ISOPENSHIFT}},
+        "endpoint": null,
+        "defaultingress": ".{{DOMAIN}}",
+        "endpointpodmetrics": null,
+        "endpointpodlog": "{{INGRESSHOSTNAME}}/dcp/log-service",
+        "readonlyfs": true,
+        "createnamespace": false,
+        "dcplogurlloki": "https://{{GRAFANA_INGRESS_HOSTNAME}}{{GRAFANA_INGRESS_PATH}}/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Loki%22,%7B%22refId%22:%22A%22,%22expr%22:%22%7Bpod%3D%5C%22",
+        "dcplogurllokiend": "%5C%22%7D%22%7D%5D",
+        "certificate": "",
+        "kubesecured": true,
+        "websocketprotocol": "wss",
+        "renewkubeclient": false,
+        "kubedefaultconfig": true,
+        "kubehost": "10.96.0.1",
+        "kubeport": "443",
+        "cacert": "none",
+        "token": "none",
+        "tokenFile": "/var/run/secrets/kubernetes.io/serviceaccount/token",
+        "usekubectltodelete": true,
+        "kubectldelete": "kubectl -n %s delete pvc -l %s --ignore-not-found=true",
+        "kubectldeletepvcbyname": "kubectl -n %s delete pvc %s --wait=false --ignore-not-found=true",
+        "helmcommandinstall": "helm upgrade --cleanup-on-fail --install %s %s --namespace %s %s --values %s",
+        "helmcommanduninstall": "helm --namespace %s uninstall %s",
+        "loadcertcmd": "openssl s_client -showcerts -servername %s -connect %s:%s 2>/dev/null </dev/null | sed -ne ''/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p''",
+        "kubectldeletesecret": "kubectl -n %s delete secret %s --ignore-not-found=true",
+        "kubectlcreatesecret": "kubectl -n %s create secret generic %s --from-file keycloak-spi.truststore.jks=%s --from-literal spi-truststore-password=%s",
+        "kubectlcreatesecretstore": "kubectl -n %s create secret generic %s %s",
+        "kubectldescribens": "kubectl describe ns %s",
+        "kubectldescribepod": "kubectl -n %s describe pod %s",
+        "kubectldescribecm": "kubectl -n %s describe cm %s",
+        "kubectldescribesecret": "kubectl-n %s describe secret %s",
+        "javaimportcertificate": "keytool -import -noprompt -trustcacerts -alias %s -file %s -keystore %s -storepass %s",
+        "instancenamepattern": "[^a-zA-Z0-9-]",
+        "sqlpolicysecretpatern": "{{dcpsecret}}-{{name}}-{{randomString}}",
+        "sqlpolicyenableduplicatesecret": true,
+        "sqlpolicyrecreateclonedsecret": true,
+        "verifynamespacename": true,
+        "namespacepattern": "[^a-zA-Z0-9-]",
+        "rangeuidannotation": "openshift.io/sa.scc.uid-range",
+        "verifysecretname": true,
+        "savesecretindatabase": false,
+        "savesecretinvolume": true,
+        "secretpattern": "[^a-zA-Z0-9-]",
+        "useingressclassname": {{USEINGRESSCLASSNAME}},
+        "ingressclassname": "{{NINXCLASS}}",
+        "ingressnumber": false,
+        "ingresssnippet": true,
+        "enableroute": {{ENABLEOSROOT}},
+        "insecureEdgeTerminationPolicy": "Allow",
+        "externalSecure": true,
+        "nginxannotation": "kubernetes.io/ingress.class: {{NINXCLASS}}\nnginx.ingress.kubernetes.io/proxy-buffer-size: \"128k\"\nnginx.ingress.kubernetes.io/affinity: cookie\nnginx.ingress.kubernetes.io/session-cookie-path: \"/\"\nnginx.ingress.kubernetes.io/session-cookie-expires: \"86400\"\nnginx.ingress.kubernetes.io/session-cookie-max-age: \"86400\"\nnginx.ingress.kubernetes.io/session-cookie-change-on-failure: \"true\"\nnginx.ingress.kubernetes.io/affinity-mode: balanced\nnginx.ingress.kubernetes.io/session-cookie-samesite: None\nnginx.ingress.kubernetes.io/session-cookie-conditional-samesite-none: \"true\"",
+        "dcpproxyprotocol": "https://",
+        "dcpingress": "{{INGRESSHOSTNAME}}",
+        "dcpproxyuri": "sparkui",
+        "redisurl": "redis://{{REDIS_SERVICENAME}}.{{NAMESPACE}}.{{CLUSTERDOMAIN}}:6379",
+        "redispassword": "{{REDISPASWORD}}",
+        "enablekeycloakdcpproxy": true,
+        "kclkenabletls": true,
+        "kclkusedcpui": false,
+        "usekeycloakcli": false,
+        "kclkrecreatespisecret": false,
+        "kclkrecreateclonedsecret": false,
+        "userkeycloakservicename": {{USERKEYCLOAKSERVICENAME}},
+        "adminRealm": "master",
+        "sessionstore": "redis",
+        "whitelistdomain": ".{{DOMAIN}}:*",
+        "imagenamekclkpgs": "postgresql",
+        "samlproviderconfig": "{\n    \"alias\": \"saml\",\n    \"displayName\": \"saml\",\n    \"internalId\": \"e99d3437-70c7-4c73-92ee-7eb63e823002\",\n    \"providerId\": \"saml\",\n    \"enabled\": true,\n    \"updateProfileFirstLoginMode\": \"on\",\n    \"storeToken\": false,\n    \"trustEmail\": false,\n    \"addReadTokenRoleOnCreate\": false,\n    \"authenticateByDefault\": false,\n    \"linkOnly\": false,\n    \"firstBrokerLoginFlowAlias\": \"Dcp LoginFlow\",\n    \"config\": {\n        \"entityId\": \"{{ entityId }}/realms/{{ defaultrealm }}\",\n        \"idpEntityId\": \"\",\n        \"singleSignOnServiceUrl\": \"{{ singleSignOnServiceUrl }}\",\n        \"singleLogoutServiceUrl\": \"\",\n        \"nameIDPolicyFormat\": \"urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified\",\n        \"principalType\": \"Subject NameID\",\n        \"allowCreate\": \"false\",\n        \"postBindingResponse\": \"true\",\n        \"postBindingAuthnRequest\": \"false\",\n        \"postBindingLogout\": \"true\",\n        \"wantAuthnRequestsSigned\": \"false\",\n        \"wantAssertionsSigned\": \"true\",\n        \"wantAssertionsEncrypted\": \"false\",\n        \"forceAuthn\": \"true\",\n        \"validateSignature\": \"false\",\n        \"signSpMetadata\": \"false\",\n        \"hideOnLoginPage\": \"false\",\n        \"backchannelSupported\": \"false\",\n        \"loginHint\": \"false\",\n        \"authnContextComparisonType\": \"exact\",\n        \"syncMode\": \"FORCE\",\n        \"attributeConsumingServiceIndex\": \"0\",\n        \"allowedClockSkew\": \"0\"\n    }\n}\n",
+        "singleSignOnServiceUrl": "",
+        "samlmapperconfig": "{\n    \"name\": \"Last Name\",\n    \"identityProviderAlias\": \"saml\",\n    \"identityProviderMapper\": \"saml-user-attribute-idp-mapper\",\n    \"config\": {\n        \"syncMode\": \"INHERIT\",\n        \"user.attribute\": \"lastName\",\n        \"attribute.name.format\": \"ATTRIBUTE_FORMAT_BASIC\",\n        \"attribute.name\": \"sn\"\n    }\n},\n{\n    \"name\": \"First Name\",\n    \"identityProviderAlias\": \"saml\",\n    \"identityProviderMapper\": \"saml-user-attribute-idp-mapper\",\n    \"config\": {\n        \"syncMode\": \"INHERIT\",\n        \"user.attribute\": \"firstName\",\n        \"attribute.name.format\": \"ATTRIBUTE_FORMAT_BASIC\",\n        \"attribute.name\": \"givenName\"\n    }\n},\n{\n    \"name\": \"Email\",\n    \"identityProviderAlias\": \"saml\",\n    \"identityProviderMapper\": \"saml-user-attribute-idp-mapper\",\n    \"config\": {\n        \"syncMode\": \"INHERIT\",\n        \"user.attribute\": \"email\",\n        \"attribute.name.format\": \"ATTRIBUTE_FORMAT_BASIC\",\n        \"attribute.name\": \"mail\"\n    }\n}\n",
+        "samlloginflow": "{\n    \"alias\": \"Dcp LoginFlow\",\n    \"description\": \"dcp login flow\",\n    \"providerId\": \"basic-flow\",\n    \"topLevel\": true,\n    \"builtIn\": false,\n    \"authenticationExecutions\": [\n        {\n            \"authenticator\": \"idp-create-user-if-unique\",\n            \"authenticatorFlow\": false,\n            \"requirement\": \"ALTERNATIVE\",\n            \"priority\": 0,\n            \"autheticatorFlow\": false,\n            \"userSetupAllowed\": false\n        },\n        {\n            \"authenticator\": \"idp-confirm-link\",\n            \"authenticatorFlow\": false,\n            \"requirement\": \"ALTERNATIVE\",\n            \"priority\": 1,\n            \"autheticatorFlow\": false,\n            \"userSetupAllowed\": false\n        }\n    ]\n}\n",
+        "ldapproviderconfig": "\"config\": {\n    \"pagination\": [\n      \"false\"\n    ],\n    \"fullSyncPeriod\": [\n      \"-1\"\n    ],\n    \"startTls\": [\n      \"false\"\n    ],\n    \"connectionPooling\": [\n      \"false\"\n    ],\n    \"usersDn\": [\n      \"{{ usersDn }}\"\n    ],\n    \"cachePolicy\": [\n      \"DEFAULT\"\n    ],\n    \"useKerberosForPasswordAuthentication\": [\n      \"false\"\n    ],\n    \"importEnabled\": [\n      \"true\"\n    ],\n    \"enabled\": [\n      \"true\"\n    ],\n    \"bindDn\": [\n      \"{{ bindDn }}\"\n    ],\n    \"changedSyncPeriod\": [\n      \"-1\"\n    ],\n    \"bindCredential\": [\n      \"{{ bindCredential }}\"\n    ],\n    \"usernameLDAPAttribute\": [\n      \"{{ usernameLDAPAttribute }}\"\n    ],\n    \"vendor\": [\n      \"ad\"\n    ],\n    \"uuidLDAPAttribute\": [\n      \"{{ UUIDLDAPattribute }}\"\n    ],\n    \"allowKerberosAuthentication\": [\n      \"false\"\n    ],\n    \"connectionUrl\": [\n      \"{{ connectionUrl }}\"\n    ],\n    \"syncRegistrations\": [\n      \"true\"\n    ],\n    \"authType\": [\n      \"simple\"\n    ],\n    \"searchScope\": [\n      \"2\"\n    ],\n    \"useTruststoreSpi\": [\n      \"{{ useTruststoreSpi }}\"\n    ],\n    \"usePasswordModifyExtendedOp\": [\n      \"false\"\n    ],\n    \"trustEmail\": [\n      \"false\"\n    ],\n    \"userObjectClasses\": [\n      \"{{ userObjectClasses }}\"\n    ],\n    \"rdnLDAPAttribute\": [\n      \"{{RDNLDAPattribute }}\"\n    ],\n    \"editMode\": [\n      \"READ_ONLY\"\n    ],\n    \"validatePasswordPolicy\": [\n      \"false\"\n    ]\n  }\n",
+        "ldapprovidermapper": "\"org.keycloak.storage.ldap.mappers.LDAPStorageMapper\": [\n  {\n    \"name\": \"modify date\",\n    \"providerId\": \"user-attribute-ldap-mapper\",\n    \"subComponents\": {},\n    \"config\": {\n      \"ldap.attribute\": [\n        \"whenChanged\"\n      ],\n      \"is.mandatory.in.ldap\": [\n        \"false\"\n      ],\n      \"read.only\": [\n        \"true\"\n      ],\n      \"always.read.value.from.ldap\": [\n        \"true\"\n      ],\n      \"user.model.attribute\": [\n        \"modifyTimestamp\"\n      ]\n    }\n  },\n  {\n    \"name\": \"last name\",\n    \"providerId\": \"user-attribute-ldap-mapper\",\n    \"subComponents\": {},\n    \"config\": {\n      \"ldap.attribute\": [\n        \"sn\"\n      ],\n      \"is.mandatory.in.ldap\": [\n        \"true\"\n      ],\n      \"read.only\": [\n        \"true\"\n      ],\n      \"always.read.value.from.ldap\": [\n        \"true\"\n      ],\n      \"user.model.attribute\": [\n        \"lastName\"\n      ]\n    }\n  },\n  {\n    \"name\": \"first name\",\n    \"providerId\": \"user-attribute-ldap-mapper\",\n    \"subComponents\": {},\n    \"config\": {\n      \"ldap.attribute\": [\n        \"givenname\"\n      ],\n      \"is.mandatory.in.ldap\": [\n        \"true\"\n      ],\n      \"attribute.force.default\": [\n        \"false\"\n      ],\n      \"is.binary.attribute\": [\n        \"false\"\n      ],\n      \"read.only\": [\n        \"true\"\n      ],\n      \"always.read.value.from.ldap\": [\n        \"true\"\n      ],\n      \"user.model.attribute\": [\n        \"firstName\"\n      ]\n    }\n  },\n  {\n    \"name\": \"creation date\",\n    \"providerId\": \"user-attribute-ldap-mapper\",\n    \"subComponents\": {},\n    \"config\": {\n      \"ldap.attribute\": [\n        \"whenCreated\"\n      ],\n      \"is.mandatory.in.ldap\": [\n        \"false\"\n      ],\n      \"always.read.value.from.ldap\": [\n        \"true\"\n      ],\n      \"read.only\": [\n        \"true\"\n      ],\n      \"user.model.attribute\": [\n        \"createTimestamp\"\n      ]\n    }\n  },\n  {\n    \"name\": \"email\",\n    \"providerId\": \"user-attribute-ldap-mapper\",\n    \"subComponents\": {},\n    \"config\": {\n      \"ldap.attribute\": [\n        \"mail\"\n      ],\n      \"is.mandatory.in.ldap\": [\n        \"false\"\n      ],\n      \"always.read.value.from.ldap\": [\n        \"false\"\n      ],\n      \"read.only\": [\n        \"true\"\n      ],\n      \"user.model.attribute\": [\n        \"email\"\n      ]\n    }\n  },\n  {\n    \"name\": \"MSAD account controls\",\n    \"providerId\": \"msad-user-account-control-mapper\",\n    \"subComponents\": {},\n    \"config\": {}\n  },\n  {\n    \"name\": \"username\",\n    \"providerId\": \"user-attribute-ldap-mapper\",\n    \"subComponents\": {},\n    \"config\": {\n      \"ldap.attribute\": [\n        \"uid\"\n      ],\n      \"is.mandatory.in.ldap\": [\n        \"true\"\n      ],\n      \"attribute.force.default\": [\n        \"false\"\n      ],\n      \"is.binary.attribute\": [\n        \"false\"\n      ],\n      \"read.only\": [\n        \"true\"\n      ],\n      \"always.read.value.from.ldap\": [\n        \"false\"\n      ],\n      \"user.model.attribute\": [\n        \"username\"\n      ]\n    }\n  }\n]",
+        "connectionUrl": "{{LDAP_URL}}",
+        "bindDn": "cn=admin,dc=example,dc=org",
+        "bindCredential": "bassim",
+        "usersDn": "ou=Users,dc=example,dc=org",
+        "usernameLDAPAttribute": "uid",
+        "RDNLDAPattribute": "uid",
+        "UUIDLDAPattribute": "uid",
+        "userObjectClasses": "person, organizationalPerson, user",
+        "kclktlstermination": "passthrough",
+        "kclkinsecuretraffic": "Redirect",
+        "ldapurl": null,
+        "ldapcertificate": "",
+        "ldapconfigs": [
+            {
+                "key": 0,
+                "name": "AUTH_LDAP_BIND_USER",
+                "value": "cn=admin,dc=example,dc=org"
+            },
+            {
+                "key": 1,
+                "name": "AUTH_LDAP_UID_FIELD",
+                "value": "uid"
+            },
+            {
+                "key": 2,
+                "name": "AUTH_LDAP_BIND_USER",
+                "value": "cn=admin,dc=example,dc=org"
+            },
+            {
+                "key": 3,
+                "name": "AUTH_LDAP_BIND_PASSWORD",
+                "value": "password"
+            },
+            {
+                "key": 4,
+                "name": "AUTH_LDAP_FIRSTNAME_FIELD",
+                "value": "givenName"
+            },
+            {
+                "key": 5,
+                "name": "AUTH_LDAP_LASTNAME_FIELD",
+                "value": "sn"
+            },
+            {
+                "key": 6,
+                "name": "AUTH_LDAP_EMAIL_FIELD",
+                "value": "mail"
+            },
+            {
+                "key": 7,
+                "name": "AUTH_LDAP_GROUP_FIELD",
+                "value": "ou"
+            },
+            {
+                "key": 8,
+                "name": "NIFI_SEARCHFILTER",
+                "value": "(objectClass=*)"
+            },
+            {
+                "key": 9,
+                "name": "NIFI_USERIDENTITYATTRIBUTE",
+                "value": "cn"
+            },
+            {
+                "key": 10,
+                "name": "NIFI_AUTHSTRATEGY",
+                "value": "SIMPLE"
+            },
+            {
+                "key": 11,
+                "name": "NIFI_IDENTITYSTRATEGY",
+                "value": "USE_DN"
+            },
+            {
+                "key": 12,
+                "name": "NIFI_AUTHEXPIRATION",
+                "value": "12 hours"
+            },
+            {
+                "key": 13,
+                "name": "NIFI_USERSEARCHSCOPE",
+                "value": "SUBTREE"
+            },
+            {
+                "key": 14,
+                "name": "NIFI_GROUPSEARCHSCOPE",
+                "value": "SUBTREE"
+            },
+            {
+                "key": 15,
+                "name": "AUTH_LDAP_SEARCH",
+                "value": "ou=Users,dc=example,dc=org"
+            }
+        ],
+        "sparkjobjavacommand": "java %s -cp /opt/spark/conf:/opt/spark/jars/* -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED org.apache.spark.deploy.SparkSubmit --deploy-mode cluster --verbose %s",
+        "enablesparkjobconfig": true,
+        "enablesparkdebugmode": true,
+        "enablesparkjobtempdir": false,
+        "enablesparkjobworkdir": false,
+        "spjobsecurebucketenv": true,
+        "sparkjobconfig": "",
+        "createsparkhistorypath": true,
+        "sphsvolumesize": 100,
+        "disablecertchecking": true,
+        "sparkkubehost": "",
+        "sparkjavadaemonopts": " -Dcom.amazonaws.sdk.disableCertChecking=%s -Djavax.net.ssl.trustStore=/opt/finalcacert/cacerts -Djavax.net.ssl.trustStorePassword=changeit ",
+        "sparkkubeport": 443,
+        "sparkpodtemplatedir": "/opt/spark/template",
+        "sparkworkdir": "/opt/spark/work-dir",
+        "sparkmonitoringconf": "",
+        "sparkmonitoringclusterconf": "",
+        "sparkprometheusconf": "",
+        "sparkshuffleconf": "spark.dynamicAllocation.enabled=true;spark.dynamicAllocation.minExecutors={{minExecutors}};spark.dynamicAllocation.maxExecutors={{maxExecutors}};spark.dynamicAllocation.initialExecutors={{initialExecutors}};spark.dynamicAllocation.executorIdleTimeout={{executorIdleTimeout}};spark.dynamicAllocation.schedulerBacklogTimeout={{schedulerBacklogTimeout}};spark.kubernetes.allocation.batch.size={{podbatchsize}};spark.shuffle.service.enabled={{externalshuffleservice}};spark.dynamicAllocation.shuffleTracking.enabled=true;spark.decommission.enabled=true;spark.storage.decommission.shuffleBlocks.enabled=true",
+        "sphsusedcpproxy": false,
+        "sphsusedcpui": false,
+        "spmnusedcpui": false,
+        "notebookusedcpui": false,
+        "spclsusedcpproxy": false,
+        "spclsusedcpui": false,
+        "sphssecurityenabled": false,
+        "spmnsecurityenabled": false,
+        "spclssecurityenabled": false,
+        "spnbsecurityenabled": false,
+        "dcpdashboardspark": "/d/-H0ElOqmit/spark-dashboard?orgId=1&refresh=5s",
+        "sphstlstermination": "edge",
+        "sphssinsecuretraffic": "Allow",
+        "spmntlstermination": "edge",
+        "spmnsinsecuretraffic": "Allow",
+        "spclsstlstermination": "edge",
+        "spclssinsecuretraffic": "Allow",
+        "notebooktlstermination": "edge",
+        "notebooksinsecuretraffic": "Allow",
+        "sphsusedcpingress": true,
+        "sphsglobalproxy": true,
+        "objectorageprotocol": "s3a,s3n,s3",
+        "objectstorageconf": "spark.hadoop.fs.s3a.bucket.{{name}}.aws.credentials.provider=org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider,spark.hadoop.fs.s3a.bucket.{{name}}.impl=org.apache.hadoop.fs.s3a.S3AFileSystem,spark.hadoop.fs.s3a.bucket.{{name}}.change.detection.version.require=false,spark.hadoop.fs.s3a.bucket.{{name}}.access.key={{accesskey}},spark.hadoop.fs.s3a.bucket.{{name}}.secret.key={{secretkey}},spark.hadoop.fs.s3a.bucket.{{name}}.endpoint={{endpoint}},spark.hadoop.fs.s3a.bucket.{{name}}.path.style.access={{styleaccess}},spark.hadoop.fs.s3a.bucket.{{name}}.signing-algorithm={{signertype}},spark.hadoop.fs.s3a.bucket.{{name}}.connection.ssl.enabled={{sslmode}},spark.hadoop.fs.s3a.connection.timeout=1200000,spark.hadoop.fs.s3a.connection.maximum=200,spark.hadoop.fs.s3a.fast.upload=true,spark.hadoop.fs.s3a.readahead.range=256K,spark.hadoop.fs.s3a.input.fadvise=random,spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem",
+        "objectstoragesacommitterconf": "spark.hadoop.fs.s3a.block.size=512M\nspark.hadoop.fs.s3a.connection.timeout=200000\nspark.hadoop.fs.s3a.fast.upload=true\nspark.hadoop.fs.s3a.readahead.range=256K\nspark.hadoop.fs.s3a.input.fadvise=random\nspark.hadoop.fs.s3a.committer.name=magic\nspark.hadoop.fs.s3a.commiter.magic.enabled=true\nspark.hadoop.fs.s3a.commiter.staging.conflict-mode=replace\nspark.hadoop.fs.s3a.committer.staging.unique-filenames=true\nspark.hadoop.fs.s3a.committer.staging.abort.pending.uploads=true\nspark.hadoop.mapreduce.outputcommitter.factory.scheme.s3a=org.apache.hadoop.fs.s3a.commit.S3ACommitterFactory\nspark.sql.sources.commitProtocolClass=org.apache.spark.internal.io.cloud.PathOutputCommitProtocol\nspark.sql.parquet.output.committer.class=org.apache.spark.internal.io.cloud.BindingParquetOutputCommitter\nspark.hadoop.fs.s3a.committer.staging.tmp.path=/tmp/staging\nspark.hadoop.fs.s3a.directory.marker.retention=keep\nspark.hadoop.fs.s3a.commiter.threads={{osconcurrency}}\nspark.hadoop.fs.s3a.threads.max={{osconcurrency}}\nspark.hadoop.fs.s3a.connection.maximum={{osconcurrency}}",
+        "objectstoragesdirectorycommitterconf": "spark.hadoop.fs.s3a.committer.name=directory\nspark.hadoop.fs.s3a.committer.staging.tmp.path=/tmp/staging\nspark.hadoop.fs.s3a.committer.magic.enabled=false\nspark.hadoop.fs.s3a.committer.staging.abort.pending.uploads=true\nspark.hadoop.fs.s3a.committer.staging.unique-filenames=true\nspark.hadoop.fs.s3a.committer.threads=2048\nspark.hadoop.fs.s3a.bucket.{{name}}.committer.staging.abort.pending.uploads=true\nspark.hadoop.fs.s3a.bucket.{{name}}.committer.staging.conflict-mode=append\nspark.hadoop.fs.s3a.buffer.dir=/tmp/s3a\nspark.hadoop.fs.s3a.threads.max=2048\nspark.hadoop.fs.s3a.connection.establish.timeout=5000\nspark.hadoop.fs.s3a.fast.upload.active.blocks=2048\nspark.hadoop.fs.s3a.fast.upload.buffer=disk\nspark.hadoop.fs.s3a.max.total.tasks=2048\nspark.hadoop.fs.s3a.multipart.size=512M\nspark.hadoop.fs.s3a.multipart.threshold=512M\nspark.hadoop.fs.s3a.socket.recv.buffer=65536\nspark.hadoop.fs.s3a.socket.send.buffer=65536",
+        "airsecurityenabled": false,
+        "airflowsusedcpui": false,
+        "ldapairflowprovider": "AUTH_LDAP_SEARCH = \"{{ AUTH_LDAP_SEARCH }}\" # the LDAP search base\nAUTH_LDAP_UID_FIELD = \"{{ AUTH_LDAP_UID_FIELD }}\"  # the username field\n\n# For a typical OpenLDAP setup (where LDAP searches require a special account):\n# The user must be the LDAP USER as defined in LDAP_ADMIN_USERNAME\nAUTH_LDAP_BIND_USER = \"{{ AUTH_LDAP_BIND_USER }}\"  # the special bind username for search\nAUTH_LDAP_BIND_PASSWORD = \"{{ AUTH_LDAP_BIND_PASSWORD }}\"  # the special bind password for search\n\n# registration configs\nAUTH_USER_REGISTRATION = True  # allow users who are not already in the FAB DB\nAUTH_USER_REGISTRATION_ROLE = \"Viewer\"  # this role will be given in addition to any AUTH_ROLES_MAPPING\nAUTH_ROLE_PUBLIC = \"Public\"\nAUTH_LDAP_FIRSTNAME_FIELD = \"{{ AUTH_LDAP_FIRSTNAME_FIELD }}\"\nAUTH_LDAP_LASTNAME_FIELD = \"{{ AUTH_LDAP_LASTNAME_FIELD }}\"\nAUTH_LDAP_EMAIL_FIELD = \"{{ AUTH_LDAP_EMAIL_FIELD }}\"  # if null in LDAP, email is set to: \"{username}@email.notfound\"\nAUTH_LDAP_GROUP_FIELD = \"{{ AUTH_LDAP_GROUP_FIELD}}\"",
+        "dcpdashboardairflow": "/d/lFXqBGxWka/airflow-monitoring?orgId=1&refresh=5s&var-Dags=All&var-airflow_id=%s",
+        "userairflowservicename": true,
+        "airflowserviceprotocol": "http://",
+        "airflowserviceport": "9090",
+        "airflowserviceapi": "%s-webserver.%s.%s:%s",
+        "airflowservicetemplate": "%s-%s-sync-svc.%s.%s:%s",
+        "airflowsyncschedulertemplate": "airflow-sync-scheduler.%s.%s:%s",
+        "airflowsyncschedulerhostnametemplate": "%s-scheduler-%d.%s-scheduler.%s.%s:%s",
+        "enablestoredaginpath": true,
+        "enablestoredagindb": true,
+        "airflowdagdcppath": "{{DIRVALUES}}",
+        "dagvolumesize": 5,
+        "logvolumesize": 50,
+        "prometheusretention": "1d",
+        "prometheusretentionsize": "10GB",
+        "prometheusrequestcpu": 100,
+        "prometheusunitrequestcore": "m",
+        "prometheusrequestmem": 128,
+        "prometheusunitrequestmem": "Mi",
+        "prometheuslimitcpu": 500,
+        "prometheusunitlimitcore": "m",
+        "prometheuslimitmem": 1024,
+        "prometheusunitlimitmem": "G",
+        "grafanarequestcpu": 256,
+        "grafanaunitrequestcore": "m",
+        "grafanarequestmem": 128,
+        "grafanaunitrequestmem": "Mi",
+        "grafanalimitcpu": 500,
+        "grafanaunitlimitcore": "m",
+        "grafanalimitmem": 1024,
+        "grafanaunitlimitmem": "Mi",
+        "extrasrequestcpu": 200,
+        "extrasunitrequestcore": "m",
+        "extrasrequestmem": 256,
+        "extrasunitrequestmem": "Mi",
+        "extraslimitcpu": 1,
+        "extrasunitlimitcore": "c",
+        "extraslimitmem": 2,
+        "extrasunitlimitmem": "G",
+        "airflowtlstermination": "edge",
+        "airflowsinsecuretraffic": "Allow",
+        "nifisecurityenabled": true,
+        "nifiusedcpui": true,
+        "ldapnifiprovider": "searchBase: \"{{ AUTH_LDAP_SEARCH }}\"\nadmin: \"{{ AUTH_LDAP_BIND_USER }}\"\npass: \"{{ AUTH_LDAP_BIND_PASSWORD }}\"\nsearchFilter: \"{{ NIFI_SEARCHFILTER }}\"\nuserIdentityAttribute: \"{{ NIFI_USERIDENTITYATTRIBUTE }}\"\n# How the connection to the LDAP server is authenticated. Possible values are ANONYMOUS, SIMPLE, LDAPS, or START_TLS.\nauthStrategy: \"{{ NIFI_AUTHSTRATEGY }}\"\nidentityStrategy: \"{{ NIFI_IDENTITYSTRATEGY }}\"\nauthExpiration: \"{{ NIFI_AUTHEXPIRATION }}\"\n# Search scope for searching users (ONE_LEVEL, OBJECT, or SUBTREE). Required if searching users.\nuserSearchScope: \"{{ NIFI_USERSEARCHSCOPE }}\"\n# Search scope for searching groups (ONE_LEVEL, OBJECT, or SUBTREE). Required if searching groups.\ngroupSearchScope: \"{{ NIFI_GROUPSEARCHSCOPE }}\"",
+        "nifitlstermination": "passthrough",
+        "nifisinsecuretraffic": "Redirect",
+        "sqlldapgroupprovider": "",
+        "sqlldapconfiguration": "password-authenticator.name=ldap\nldap.url={{ ldapurl }}\n{%- if ldaps %}\nldap.ssl.truststore.path={{ etcdir }}/ldap/cert.pem\n{%- endif %}\nldap.allow-insecure={{ allowInsecure }}\nldap.bind-dn={{ bindDn }}\nldap.bind-password={{ bindCredential }}\nldap.user-bind-pattern={{ bindPattern }}\nldap.user-base-dn={{ baseDn }}\nldap.group-auth-pattern={{ authPattern }}",
+        "sqlsecurityenabled": true,
+        "sqlenableingress": true,
+        "sqlusecnx": true,
+        "keystoreusevolume": false,
+        "keystorecreateoneachsave": false,
+        "sqltlstermination": "passthrough",
+        "sqlsinsecuretraffic": "Redirect",
+        "rangertlstermination": "edge",
+        "rangerrsinsecuretraffic": "Allow",
+        "solrtlstermination": "edge",
+        "solrsinsecuretraffic": "Allow",
+        "hmsobjectstorageendpoint": "fs.s3a.access.key={{accesskey}}\nfs.s3a.secret.key={{secretkey}}\nfs.s3a.endpoint={{endpoint}}\nfs.s3a.path.style.access={{styleaccess}}\nfs.s3a.signing-algorithm={{signertype}}\nfs.s3a.connection.ssl.enabled={{sslmode}}\n{%- if region %}fs.s3a.region={{region}}{%- endif %}",
+        "hmsobjectstoragebucket": "fs.s3a.bucket.{{name}}.access.key={{accesskey}}\nfs.s3a.bucket.{{name}}.secret.key={{secretkey}}\nfs.s3a.bucket.{{name}}.endpoint={{endpoint}}\nfs.s3a.bucket.{{name}}.path.style.access={{styleaccess}}\nfs.s3a.bucket.{{name}}.signing-algorithm={{signertype}}\nfs.s3a.bucket.{{name}}.connection.ssl.enabled={{sslmode}}\n{%- if region %}fs.s3a.bucket.{{name}}.region={{region}}{%- endif %}",
+        "yschedulerservice": "http://dcpscheduler-service.{{NAMESPACE}}.svc.cluster.local:9889",
+        "yschedulername": "{{PREFIX}}scheduler",
+        "yschedulernamespace": "{{NAMESPACE}}",
+        "yschedulercontainrname": "dcp-scheduler-k8s",
+        "dbhost": "{{PGS_SERVICENAME}}.{{NAMESPACE}}.{{CLUSTERDOMAIN}}",
+        "dbname": "{{PGS_DATABASE}}",
+        "dbuser": "{{PGS_USERNAME}}",
+        "dbpwd": "{{PGS_PASSWORD}}",
+        "additionalCertificate": [],
+        "dcpsparkoperator": false,
+        "gsparkoperator": false,
+        "vscheduler": false,
+        "yscheduler": false,
+        "enablesparkhsdebugmode": false,
+        "sphsrequestcpuproxy": 1,
+        "sphsrequestmemproxy": 1,
+        "sphslimitcpuproxy": 2,
+        "sphslimitmemproxy": 2,
+        "unitsphsrequestcpuproxy": "c",
+        "unitsphsrequestmemproxy": "G",
+        "unitsphslimitcpuproxy": "c",
+        "unitsphslimitmemproxy": "G",
+        "enabledifferentqueuefromtenant": false,
+        "sparkjobpriorityclass": "spark-driver",
+        "cachereadonlyfs": true,
+        "refreshcatalogs": true,
+        "objectstoragecatalog": "",
+        "icebergcatalog": "",
+        "hivecatalog": "",
+        "postgresqlcatalog": "",
+        "oraclecatalog": "",
+        "topologyenabled": false,
+        "topologyrequired": false,
+        "topologykeys":[{"key":1,"name":"kubernetes.io/hostname","value":null},{"key":2,"name":"topology.kubernetes.io/zone","value":null},{"key":3,"name":"topology.kubernetes.io/region","value":null},{"key":4,"name":"kubernetes.io/arch - Pods","value":null}],
+        "topologytype": "group",
+        "defaulttopologykey": "kubernetes.io/hostname",
+        "enabledcpscheduler": true,
+        "enabledefaultscheduler": false,
+        "dcpschedulerisdefault": true,
+        "airflowenv": "AIRFLOW__CORE__LOAD_EXAMPLES=False\nAIRFLOW__SCHEDULER__MIN_FILE_PROCESS_INTERVAL=5\nAIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL=5\n",
+        "kubeenvservice": "KUBERNETES_SERVICE_HOST",
+        "kubeenvport": "KUBERNETES_SERVICE_HOST",
+        "sparkuri": "k8s://https://",
+        "enablekeycloakdebugmode": false,
+        "enableairflowdebugmode": false,
+        "enablenifidebugmode": false,
+        "enablecachedebugmode": false,
+        "enablesqldebugmode": false,
+        "enablenotebookdebugmode": false,
+        "enablesqlpolicydebugmode": false,
+        "enablehmsdebugmode": false,
+        "sqljvmconfigs": "-server\n-Xmx%sG\n-XX:+UseG1GC\n-XX:G1HeapRegionSize=%s\n-XX:+UseGCOverheadLimit\n-XX:+ExplicitGCInvokesConcurrent\n-XX:+HeapDumpOnOutOfMemoryError\n-XX:+ExitOnOutOfMemoryError\n-Djdk.attach.allowAttachSelf=true\n-XX:ReservedCodeCacheSize=512M\n-XX:PerMethodRecompilationCutoff=10000\n-XX:PerBytecodeRecompilationCutoff=10000\n-Djdk.nio.maxCachedBufferSize=2000000\n-XX:+UnlockDiagnosticVMOptions\n-XX:+UseAESCTRIntrinsics\n--add-opens=java.base/sun.nio.ch=ALL-UNNAMED\n--add-opens=java.base/java.nio=ALL-UNNAMED\n--add-opens=java.base/java.lang=ALL-UNNAMED\n--add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED\n-XX:-OmitStackTraceInFastThrow",
+        "prestodbldapconfig": "password-authenticator.name=dcpldap\nldap.url={{ ldapurl }}\nbindusername={{ bindDn }}\nbindpassword={{ bindCredential }}\nldap.user-bind-pattern=cn=%s,ou=Users,dc=example,dc=org\ndebug=false\nldap.security-authentication=simple\nldap.configs=none\npasswordfile=/etc/trino/password.db",
+        "prestodbjvmconfigs": "-server\n-Xmx%sG\n-XX:+UseG1GC\n-XX:G1HeapRegionSize=%s\n-XX:+UseGCOverheadLimit\n-XX:+ExplicitGCInvokesConcurrent\n-XX:+HeapDumpOnOutOfMemoryError\n-XX:+ExitOnOutOfMemoryError\n-Djdk.attach.allowAttachSelf=true\n-XX:ReservedCodeCacheSize=512M\n-XX:PerMethodRecompilationCutoff=10000\n-XX:PerBytecodeRecompilationCutoff=10000\n-Djdk.nio.maxCachedBufferSize=2000000\n-XX:+UnlockDiagnosticVMOptions\n-XX:+UseAESCTRIntrinsics\n--add-opens=java.base/sun.nio.ch=ALL-UNNAMED\n--add-opens=java.base/java.nio=ALL-UNNAMED\n--add-opens=java.base/java.lang=ALL-UNNAMED\n--add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED\n-XX:-OmitStackTraceInFastThrow",
+        "sphsdaemonmemory": 4,
+        "sphsmaxcores": 4,
+        "sphsmaxmemory": 4,
+        "spmnmaxcoresinflux": 4,
+        "spmnmaxmemoryinflux": 4,
+        "spmndatasizeinflux": 100,
+        "spmnlogsizeinflux": 50,
+        "spmnmaxcoresgrafana": 4,
+        "spmnmaxmemorygrafana": 4,
+        "spmndatasizegrafana": 100,
+        "spmnlogsizegrafana": 50,
+        "airflowdbsize": 10,
+        "airflowreadreplicas": 3,
+        "airflowmaxcorespgs": 4,
+        "airflowmaxmemorypgs": 4,
+        "airflowwebservermaxcores": 4,
+        "airflowwebservermaxmemory": 4,
+        "airflowschedulermaxcores": 4,
+        "airflowschedulermaxmemory": 4,
+        "airflowtriggermaxcores": 4,
+        "airflowtriggermaxmemory": 4,
+        "keycloakmaxcores": 4,
+        "keycloakmaxmemory": 4,
+        "keycloakreadreplicas": 3,
+        "keycloakdbsize": 10,
+        "keycloakmaxcorespgs": 4,
+        "keycloakmaxmemorypgs": 4,
+        "notebookmaxcores": 4,
+        "notebookmaxmemory": 8,
+        "notebookdatasize": 10,
+        "sqlworkercount": 3,
+        "sqlmemory": 64,
+        "sqlcores": 12,
+        "sqlglobalheapregionsize": 32,
+        "sqlpolicymaxcores": 4,
+        "sqlpolicymaxmemory": 4,
+        "sqlpolicyreadreplicas": 3,
+        "sqlpolicydbsize": 10,
+        "sqlpolicymaxcorespgs": 4,
+        "sqlpolicymaxmemorypgs": 4,
+        "hmsmaxcores": 4,
+        "hmsmaxmemory": 4,
+        "hmsreadreplicas": 3,
+        "hmsdbsize": 10,
+        "hmsmaxcorespgs": 4,
+        "hmsmaxmemorypgs": 4
+    }
+    ') RETURNING id INTO idprovider;
+    insert into dcp_priority_class (name,idprovider, provider,description,value,preemptionPolicy,globalDefault) values('spark-driver',idprovider, 'local','spark driver priority classe',1000000000,'PreemptLowerPriority',false);
+    END $$;
